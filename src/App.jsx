@@ -482,7 +482,7 @@ function App() {
                 <Layout>
                     <Card>
                         <Header>
-                            <Title>투두리스트</Title>
+                            <Title>Todo-List</Title>
                             <ToggleWrap
                                 type="button"
                                 onClick={() => setIsDark(!isDark)}

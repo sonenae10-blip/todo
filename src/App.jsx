@@ -51,7 +51,7 @@ const Layout = styled.div`
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 
-    @media (max-width: 900px) {
+    @media (max-width: 995px) {
         grid-template-columns: 1fr;
     }
 `;

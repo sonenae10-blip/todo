@@ -137,7 +137,7 @@ function AuthPage({
                             <MiniBtn type="submit">메일 보내기</MiniBtn>
                             <AuthLinks>
                                 <TextLink type="button" onClick={() => setAuthView("login")}>
-                                    로그인으로
+                                    로그인
                                 </TextLink>
                             </AuthLinks>
                         </MiniForm>

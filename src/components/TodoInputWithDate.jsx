@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Input, DateInput, AddBtn, ToggleChip } from "../styles/ui";
+import { Form, Input, DateInput, ToggleChip, TodoInputRow, TodoTextRow, TodoDateInput, TodoAddBtn, DateRangeRow, RepeatDaysRow } from "../styles/ui";
 
 function TodoInputWithDate({
     textValue,
@@ -56,44 +56,51 @@ function TodoInputWithDate({
             </div>
 
             {showRange && (
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    <DateInput
-                        type="date"
-                        value={startDateValue}
-                        onChange={onStartDateChange}
-                        disabled={disabled}
-                    />
-                    <DateInput
-                        type="date"
-                        value={endDateValue}
-                        onChange={onEndDateChange}
-                        disabled={disabled}
-                    />
-                </div>
+                <DateRangeRow>
+                    <label style={{ display: "inline-flex", gap: 6, alignItems: "center", fontSize: 12, whiteSpace: "nowrap" }}>
+                        시작일
+                        <DateInput
+                            type="date"
+                            value={startDateValue}
+                            onChange={onStartDateChange}
+                            disabled={disabled}
+                        />
+                    </label>
+                    <label style={{ display: "inline-flex", gap: 6, alignItems: "center", fontSize: 12, whiteSpace: "nowrap" }}>
+                        종료일
+                        <DateInput
+                            type="date"
+                            value={endDateValue}
+                            onChange={onEndDateChange}
+                            disabled={disabled}
+                        />
+                    </label>
+                </DateRangeRow>
             )}
 
             {showRepeat && (
-                <div
-                    style={{
-                        display: "flex",
-                        gap: 8,
-                        flexWrap: "wrap",
-                        alignItems: "center",
-                    }}
-                >
-                    <DateInput
-                        type="date"
-                        value={startDateValue}
-                        onChange={onStartDateChange}
-                        disabled={disabled}
-                    />
-                    <DateInput
-                        type="date"
-                        value={endDateValue}
-                        onChange={onEndDateChange}
-                        disabled={disabled}
-                    />
-                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                <div style={{ display: "grid", gap: 8 }}>
+                    <DateRangeRow>
+                        <label style={{ display: "inline-flex", gap: 6, alignItems: "center", fontSize: 12, whiteSpace: "nowrap" }}>
+                            시작일
+                            <DateInput
+                                type="date"
+                                value={startDateValue}
+                                onChange={onStartDateChange}
+                                disabled={disabled}
+                            />
+                        </label>
+                        <label style={{ display: "inline-flex", gap: 6, alignItems: "center", fontSize: 12, whiteSpace: "nowrap" }}>
+                            종료일
+                            <DateInput
+                                type="date"
+                                value={endDateValue}
+                                onChange={onEndDateChange}
+                                disabled={disabled}
+                            />
+                        </label>
+                    </DateRangeRow>
+                    <RepeatDaysRow>
                         {["일", "월", "화", "수", "목", "금", "토"].map(
                             (label, idx) => (
                                 <label key={label} style={{ fontSize: 12 }}>
@@ -107,29 +114,33 @@ function TodoInputWithDate({
                                 </label>
                             )
                         )}
-                    </div>
+                    </RepeatDaysRow>
                 </div>
             )}
 
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <Input
-                    type="text"
-                    placeholder="할 일을 입력해주세요."
-                    value={textValue}
-                    onChange={onTextChange}
-                    required
-                    disabled={disabled}
-                />
-                <DateInput
-                    type="date"
-                    value={startDateValue}
-                    onChange={onStartDateChange}
-                    disabled={disabled}
-                />
-                <AddBtn type="submit" disabled={disabled}>
-                    추가
-                </AddBtn>
-            </div>
+            <TodoInputRow>
+                {!showRange && !showRepeat && (
+                    <TodoDateInput
+                        type="date"
+                        value={startDateValue}
+                        onChange={onStartDateChange}
+                        disabled={disabled}
+                    />
+                )}
+                <TodoTextRow>
+                    <Input
+                        type="text"
+                        placeholder="할 일을 입력해주세요."
+                        value={textValue}
+                        onChange={onTextChange}
+                        required
+                        disabled={disabled}
+                    />
+                    <TodoAddBtn type="submit" disabled={disabled}>
+                        추가
+                    </TodoAddBtn>
+                </TodoTextRow>
+            </TodoInputRow>
         </Form>
     );
 }

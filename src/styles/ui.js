@@ -6,7 +6,7 @@ export const AppWrap = styled.div`
     padding: 50px 20px;
     display: flex;
     justify-content: center;
-    min-width: 418px;
+    min-width: 450px;
     overflow-x: auto;
 `;
 
@@ -394,6 +394,74 @@ export const InlineGroup = styled.div`
     align-items: center;
 `;
 
+export const TodoInputRow = styled.div`
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
+
+    @media (max-width: 485px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+`;
+
+export const TodoTextRow = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+
+    & > input {
+        flex: 1 1 auto;
+    }
+`;
+
+export const TodoDateInput = styled(DateInput)`
+    flex: 1 1 auto;
+    min-width: 0;
+`;
+
+export const TodoAddBtn = styled(AddBtn)`
+    flex: 0 0 auto;
+    width: 78px;
+`;
+
+export const DateRangeRow = styled.div`
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    @media (max-width: 450px) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    @media (min-width: 995px) {
+        & > label {
+            flex: 1 1 0;
+        }
+
+        & > label > input {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+    }
+`;
+
+export const RepeatDaysRow = styled.div`
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+
+    @media (max-width: 450px) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+`;
+
 export const AuthLinks = styled.div`
     display: flex;
     gap: 14px;
@@ -586,6 +654,7 @@ export const HomeGrid = styled.div`
 export const HomeCard = styled(Card)`
     min-height: 540px;
 `;
+
 
 export const RulesList = styled.ul`
     margin: 6px 0 0;

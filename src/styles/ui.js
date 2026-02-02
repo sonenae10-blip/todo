@@ -517,6 +517,11 @@ export const FullscreenWrap = styled.div`
     background: ${(props) => props.theme.bg};
 `;
 
+export const AuthShell = styled.div`
+    position: relative;
+    width: min(420px, 100%);
+`;
+
 export const AuthCard = styled(Card)`
     width: min(420px, 100%);
     padding: 26px;
@@ -592,12 +597,12 @@ export const RulesList = styled.ul`
 `;
 
 export const RulesCard = styled.div`
-    background: #ffffff;
+    background: ${(props) => props.theme.surface};
     border: 1px solid ${(props) => props.theme.border};
     border-radius: 12px;
     padding: 10px 12px;
     font-size: 12px;
-    color: ${(props) => props.theme.muted};
+    color: ${(props) => props.theme.text};
 `;
 
 export const RulesFloat = styled.div`

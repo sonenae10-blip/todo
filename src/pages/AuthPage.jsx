@@ -6,6 +6,7 @@
     MiniForm,
     MiniInput,
     Message,
+    AuthShell,
     RulesCard,
     RulesFloat,
     RulesList,
@@ -38,7 +39,7 @@ function AuthPage({
 }) {
     return (
         <FullscreenWrap>
-            <AuthCard>
+            <AuthShell>
                 {authView === "signup" && (
                     <RulesFloat>
                         <RulesCard>
@@ -52,100 +53,103 @@ function AuthPage({
                         </RulesCard>
                     </RulesFloat>
                 )}
-                <Header>
-                    <Title>
-                        {authView === "login" && "로그인"}
-                        {authView === "signup" && "회원가입"}
-                        {authView === "reset" && "비밀번호 찾기"}
-                    </Title>
-                    <ToggleWrap
-                        type="button"
-                        onClick={() => setIsDark(!isDark)}
-                        $on={isDark}
-                        aria-pressed={isDark}
-                        aria-label="다크 모드 토글"
-                    >
-                        <ToggleKnob $on={isDark} />
-                    </ToggleWrap>
-                </Header>
+                <AuthCard>
+                    <Header>
+                        <Title>
+                            {authView === "login" && "로그인"}
+                            {authView === "signup" && "회원가입"}
+                            {authView === "reset" && "비밀번호 재설정"}
+                        </Title>
+                        <ToggleWrap
+                            type="button"
+                            onClick={() => setIsDark(!isDark)}
+                            $on={isDark}
+                            aria-pressed={isDark}
+                            aria-label="다크 모드 토글"
+                        >
+                            <ToggleKnob $on={isDark} />
+                        </ToggleWrap>
+                    </Header>
 
-                {authView === "login" && (
-                    <MiniForm onSubmit={handleLogin}>
-                        <MiniInput
-                            type="email"
-                            placeholder="이메일"
-                            value={loginEmail}
-                            onChange={(e) => setLoginEmail(e.target.value)}
-                            required
-                        />
-                        <MiniInput
-                            type="password"
-                            placeholder="비밀번호"
-                            value={loginPassword}
-                            onChange={(e) => setLoginPassword(e.target.value)}
-                            required
-                        />
-                        <MiniBtn type="submit">로그인</MiniBtn>
-                        <AuthLinks>
+                    {authView === "login" && (
+                        <MiniForm onSubmit={handleLogin}>
+                            <MiniInput
+                                type="email"
+                                placeholder="이메일"
+                                value={loginEmail}
+                                onChange={(e) => setLoginEmail(e.target.value)}
+                                required
+                            />
+                            <MiniInput
+                                type="password"
+                                placeholder="비밀번호"
+                                value={loginPassword}
+                                onChange={(e) => setLoginPassword(e.target.value)}
+                                required
+                            />
+                            <MiniBtn type="submit">로그인</MiniBtn>
+                            <AuthLinks>
                             <TextLink type="button" onClick={() => setAuthView("reset")}>
-                                비밀번호 찾기
+                                비밀번호 재설정
                             </TextLink>
+                            <span>|</span>
                             <TextLink type="button" onClick={() => setAuthView("signup")}>
                                 회원가입
                             </TextLink>
                         </AuthLinks>
-                    </MiniForm>
-                )}
+                        </MiniForm>
+                    )}
 
-                {authView === "signup" && (
-                    <MiniForm onSubmit={handleSignup}>
-                        <MiniInput
-                            type="email"
-                            placeholder="이메일"
-                            value={signupEmail}
-                            onChange={(e) => setSignupEmail(e.target.value)}
-                            required
-                        />
-                        <MiniInput
-                            type="password"
-                            placeholder="비밀번호"
-                            value={signupPassword}
-                            onChange={(e) => setSignupPassword(e.target.value)}
-                            required
-                        />
-                        <MiniBtn type="submit">회원가입</MiniBtn>
-                        <AuthLinks>
-                            <TextLink type="button" onClick={() => setAuthView("login")}>
-                                로그인
-                            </TextLink>
-                        </AuthLinks>
-                    </MiniForm>
-                )}
+                    {authView === "signup" && (
+                        <MiniForm onSubmit={handleSignup}>
+                            <MiniInput
+                                type="email"
+                                placeholder="이메일"
+                                value={signupEmail}
+                                onChange={(e) => setSignupEmail(e.target.value)}
+                                required
+                            />
+                            <MiniInput
+                                type="password"
+                                placeholder="비밀번호"
+                                value={signupPassword}
+                                onChange={(e) => setSignupPassword(e.target.value)}
+                                required
+                            />
+                            <MiniBtn type="submit">회원가입</MiniBtn>
+                            <AuthLinks>
+                                <TextLink type="button" onClick={() => setAuthView("login")}>
+                                    로그인
+                                </TextLink>
+                            </AuthLinks>
+                        </MiniForm>
+                    )}
 
-                {authView === "reset" && (
-                    <MiniForm onSubmit={handleReset}>
-                        <MiniInput
-                            type="email"
-                            placeholder="이메일"
-                            value={resetEmail}
-                            onChange={(e) => setResetEmail(e.target.value)}
-                            required
-                        />
-                        <MiniBtn type="submit">메일 보내기</MiniBtn>
-                        <AuthLinks>
-                            <TextLink type="button" onClick={() => setAuthView("login")}>
-                                로그인으로
-                            </TextLink>
-                        </AuthLinks>
-                    </MiniForm>
-                )}
+                    {authView === "reset" && (
+                        <MiniForm onSubmit={handleReset}>
+                            <MiniInput
+                                type="email"
+                                placeholder="이메일"
+                                value={resetEmail}
+                                onChange={(e) => setResetEmail(e.target.value)}
+                                required
+                            />
+                            <MiniBtn type="submit">메일 보내기</MiniBtn>
+                            <AuthLinks>
+                                <TextLink type="button" onClick={() => setAuthView("login")}>
+                                    로그인으로
+                                </TextLink>
+                            </AuthLinks>
+                        </MiniForm>
+                    )}
 
-                {authMessage && (
-                    <Message $tone={authMessage.tone}>
-                        {authMessage.text}
-                    </Message>
-                )}
-            </AuthCard>
+                    {authMessage && (
+                        <Message $tone={authMessage.tone}>
+                            {authMessage.text}
+                        </Message>
+                    )}
+                </AuthCard>
+            </AuthShell>
         </FullscreenWrap>
     );
 }

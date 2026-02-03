@@ -98,6 +98,10 @@ export const AddBtn = styled.button`
     background: ${(props) => props.theme.accent};
     color: white;
     cursor: pointer;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 export const List = styled.ul`
@@ -123,9 +127,10 @@ export const Item = styled.li`
         if (props.$done) return props.theme.doneBg;
         return props.theme.surface;
     }};
+    min-width: 0;
 
     @media (max-width: 600px) {
-        grid-template-columns: 24px 1fr;
+        grid-template-columns: 24px minmax(0, 1fr);
         row-gap: 8px;
     }
 `;
@@ -151,6 +156,10 @@ export const DeleteBtn = styled.button`
     padding: 6px 10px;
     border-radius: 8px;
     cursor: pointer;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     @media (max-width: 600px) {
         grid-column: 2 / 3;
@@ -208,6 +217,8 @@ export const DayCell = styled.div`
     outline: ${(props) =>
         props.$selected ? "2px solid #60a5fa" : "none"};
     cursor: ${(props) => (props.$empty ? "default" : "pointer")};
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 
     @media (max-width: 600px) {
         height: 84px;
@@ -325,8 +336,8 @@ export const ClearBtn = styled.button`
 export const EditFields = styled.div`
     display: flex;
     gap: 8px;
-    align-items: center;
-    flex-wrap: wrap;
+    align-items: stretch;
+    flex-direction: column;
 `;
 
 export const InlineInput = styled(Input)`
@@ -343,6 +354,16 @@ export const ActionGroup = styled.div`
     display: flex;
     gap: 8px;
     align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    min-width: 0;
+
+    @media (max-width: 1130px) {
+        grid-column: 2 / -1;
+        justify-self: start;
+        margin-top: 6px;
+        grid-row: ${(props) => (props.$editing ? "2" : "1")};
+    }
 
     @media (max-width: 600px) {
         grid-column: 2 / 3;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     HomeCard,
     Header,
@@ -58,7 +58,6 @@ function HomePage({
 }) {
     const [page, setPage] = useState(1);
     const pageSize = 6;
-    const calendarRef = useRef(null);
 
     const getDdayLabel = (dateKey) => {
         if (!dateKey || !today) return "";
@@ -74,18 +73,6 @@ function HomePage({
         setPage(1);
     }, [selectedDate, sortedVisible.length]);
 
-    useEffect(() => {
-        if (!selectedDate) return undefined;
-        const handleOutsideClick = (e) => {
-            if (!calendarRef.current) return;
-            if (!calendarRef.current.contains(e.target)) {
-                setSelectedDateClear();
-            }
-        };
-        document.addEventListener("mousedown", handleOutsideClick);
-        return () =>
-            document.removeEventListener("mousedown", handleOutsideClick);
-    }, [selectedDate, setSelectedDateClear]);
 
     const totalPages = Math.max(1, Math.ceil(sortedVisible.length / pageSize));
     const pageItems = useMemo(() => {
@@ -246,7 +233,7 @@ function HomePage({
                 )}
             </HomeCard>
 
-            <HomeCard ref={calendarRef}>
+            <HomeCard>
                 <CalendarView
                     currentMonth={currentMonth}
                     monthLabel={monthLabel}

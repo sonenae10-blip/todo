@@ -88,6 +88,10 @@ function CalendarView({
                             key={dateKey}
                             onClick={(e) => {
                                 e.stopPropagation();
+                                if (selectedDate === dateKey) {
+                                    setSelectedDate("");
+                                    return;
+                                }
                                 setSelectedDate(dateKey);
                                 setTodoStartDate(dateKey);
                                 setTodoEndDate(dateKey);

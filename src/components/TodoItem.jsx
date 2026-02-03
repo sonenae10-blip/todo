@@ -1,4 +1,5 @@
-﻿import {
+﻿import { useEffect, useState } from "react";
+import {
     ActionGroup,
     CancelBtn,
     DeleteBtn,
@@ -12,6 +13,7 @@
     ItemText,
     OwnerBadge,
     SaveBtn,
+    ToggleChip,
 } from "../styles/ui";
 
 function TodoItem({
@@ -37,6 +39,14 @@ function TodoItem({
     onEditSave,
     onEditCancel,
 }) {
+    const [editMode, setEditMode] = useState("basic");
+
+    useEffect(() => {
+        if (isEditing) {
+            setEditMode("basic");
+        }
+    }, [isEditing]);
+
     return (
         <Item $done={item.done} $friend={isFriend}>
             <input
@@ -54,33 +64,72 @@ function TodoItem({
                         onKeyDown={onEditKeyDown}
                         required
                     />
-                    <InlineDateInput
-                        type="date"
-                        value={editStartDate}
-                        onChange={onEditStartDateChange}
-                        onKeyDown={onEditKeyDown}
-                    />
-                    <InlineDateInput
-                        type="date"
-                        value={editEndDate}
-                        onChange={onEditEndDateChange}
-                        onKeyDown={onEditKeyDown}
-                    />
+                    {editMode === "basic" ? (
+                        <InlineDateInput
+                            type="date"
+                            value={editStartDate}
+                            onChange={onEditStartDateChange}
+                            onKeyDown={onEditKeyDown}
+                        />
+                    ) : (
+                        <InlineGroup
+                            style={{ flexWrap: "nowrap", width: "100%" }}
+                        >
+                            <InlineDateInput
+                                type="date"
+                                value={editStartDate}
+                                onChange={onEditStartDateChange}
+                                onKeyDown={onEditKeyDown}
+                            />
+                            <InlineDateInput
+                                type="date"
+                                value={editEndDate}
+                                onChange={onEditEndDateChange}
+                                onKeyDown={onEditKeyDown}
+                            />
+                        </InlineGroup>
+                    )}
+                    {editMode === "repeat" && (
+                        <InlineGroup>
+                            {["일", "월", "화", "수", "목", "금", "토"].map(
+                                (label, idx) => (
+                                    <label key={label} style={{ fontSize: 12 }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={editRepeatDays.includes(idx)}
+                                            onChange={() =>
+                                                onEditRepeatDayToggle(idx)
+                                            }
+                                        />{" "}
+                                        {label}
+                                    </label>
+                                )
+                            )}
+                        </InlineGroup>
+                    )}
                     <InlineGroup>
-                        {["일", "월", "화", "수", "목", "금", "토"].map(
-                            (label, idx) => (
-                                <label key={label} style={{ fontSize: 12 }}>
-                                    <input
-                                        type="checkbox"
-                                        checked={editRepeatDays.includes(idx)}
-                                        onChange={() =>
-                                            onEditRepeatDayToggle(idx)
-                                        }
-                                    />{" "}
-                                    {label}
-                                </label>
-                            )
-                        )}
+                        <ToggleChip
+                            type="button"
+                            $active={editMode === "range"}
+                            onClick={() =>
+                                setEditMode((prev) =>
+                                    prev === "range" ? "basic" : "range"
+                                )
+                            }
+                        >
+                            기간
+                        </ToggleChip>
+                        <ToggleChip
+                            type="button"
+                            $active={editMode === "repeat"}
+                            onClick={() =>
+                                setEditMode((prev) =>
+                                    prev === "repeat" ? "basic" : "repeat"
+                                )
+                            }
+                        >
+                            반복
+                        </ToggleChip>
                     </InlineGroup>
                 </EditFields>
             ) : (
@@ -91,7 +140,7 @@ function TodoItem({
                     {ddayLabel && <OwnerBadge>{ddayLabel}</OwnerBadge>}
                 </ItemMain>
             )}
-            <ActionGroup>
+            <ActionGroup $editing={isEditing}>
                 {canEdit ? (
                     isEditing ? (
                         <>

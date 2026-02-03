@@ -198,13 +198,15 @@ export const CalendarGrid = styled.div`
 export const DayCell = styled.div`
     height: 96px;
     border-radius: 10px;
-    border: 1px solid ${(props) => props.theme.border};
-    background: ${(props) => props.theme.calendarCell};
+    border: 1px solid
+        ${(props) => (props.$today ? "#93c5fd" : props.theme.border)};
+    background: ${(props) =>
+        props.$today ? props.theme.doneBg : props.theme.calendarCell};
     padding: 6px;
     opacity: ${(props) => (props.$empty ? 0.4 : 1)};
     overflow: hidden;
     outline: ${(props) =>
-        props.$selected ? `2px solid ${props.theme.accent}` : "none"};
+        props.$selected ? "2px solid #60a5fa" : "none"};
     cursor: ${(props) => (props.$empty ? "default" : "pointer")};
 
     @media (max-width: 600px) {

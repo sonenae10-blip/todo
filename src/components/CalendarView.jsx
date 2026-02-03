@@ -50,6 +50,7 @@ function CalendarView({
     currentUid,
 }) {
     const cells = useMemo(() => buildMonthCells(currentMonth), [currentMonth]);
+    const todayKey = useMemo(() => formatDateKey(new Date()), []);
 
     return (
         <>
@@ -92,6 +93,7 @@ function CalendarView({
                                 setTodoEndDate(dateKey);
                             }}
                             $selected={selectedDate === dateKey}
+                            $today={dateKey === todayKey}
                         >
                             <DayNumber>{dateObj.getDate()}</DayNumber>
                             <DayList>

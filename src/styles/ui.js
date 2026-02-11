@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 
 export const AppWrap = styled.div`
     min-height: 100vh;
+    width: 100%;
     padding: 50px 20px;
     display: flex;
     justify-content: center;
-    min-width: 450px;
-    overflow-x: auto;
+    overflow-x: hidden;
+
+    @media (max-width: 600px) {
+        padding: 20px 12px;
+    }
 `;
 
 export const Layout = styled.div`
@@ -128,14 +132,11 @@ export const Item = styled.li`
         return props.theme.surface;
     }};
     min-width: 0;
-
-    @media (max-width: 600px) {
-        grid-template-columns: 24px minmax(0, 1fr);
-        row-gap: 8px;
-    }
 `;
 
 export const ItemText = styled.span`
+    flex: 1 1 auto;
+    min-width: 0;
     color: ${(props) => props.theme.text};
     text-decoration: ${(props) => (props.$done ? "line-through" : "none")};
     white-space: nowrap;
@@ -146,6 +147,7 @@ export const ItemText = styled.span`
 export const ItemMain = styled.div`
     display: flex;
     align-items: center;
+    gap: 6px;
     min-width: 0;
 `;
 
@@ -160,11 +162,6 @@ export const DeleteBtn = styled.button`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    @media (max-width: 600px) {
-        grid-column: 2 / 3;
-        justify-self: start;
-    }
 `;
 export const CalendarHeader = styled.div`
     display: flex;
@@ -357,18 +354,6 @@ export const ActionGroup = styled.div`
     flex-wrap: nowrap;
     white-space: nowrap;
     min-width: 0;
-
-    @media (max-width: 1130px) {
-        grid-column: 2 / -1;
-        justify-self: start;
-        margin-top: 6px;
-        grid-row: ${(props) => (props.$editing ? "2" : "1")};
-    }
-
-    @media (max-width: 600px) {
-        grid-column: 2 / 3;
-        justify-self: start;
-    }
 `;
 
 export const EditBtn = styled(DeleteBtn)``;
@@ -669,7 +654,7 @@ export const HomeGrid = styled.div`
     width: 100%;
     justify-content: center;
 
-    @media (max-width: 995px) {
+    @media (max-width: 1129px) {
         grid-template-columns: 1fr;
     }
 `;
@@ -751,3 +736,5 @@ export const PageIndicator = styled.span`
     padding: 0 6px;
     height: 28px;
 `;
+
+

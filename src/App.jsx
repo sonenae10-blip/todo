@@ -78,9 +78,30 @@ function normalizeTodoList(list) {
     }));
 }
 
+function normalizeDateKey(dateKey) {
+    if (!dateKey) return "";
+    const raw = String(dateKey).trim();
+    if (!raw) return "";
+
+    const isoMatch = raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (isoMatch) {
+        const year = isoMatch[1];
+        const month = isoMatch[2].padStart(2, "0");
+        const day = isoMatch[3].padStart(2, "0");
+        const normalized = `${year}-${month}-${day}`;
+        const parsed = new Date(`${normalized}T00:00:00`);
+        if (!Number.isNaN(parsed.getTime())) return normalized;
+    }
+
+    const parsed = new Date(raw);
+    if (Number.isNaN(parsed.getTime())) return "";
+    return formatDateKey(parsed);
+}
+
 function parseDateKey(dateKey) {
-    if (!dateKey) return null;
-    return new Date(`${dateKey}T00:00:00`);
+    const normalized = normalizeDateKey(dateKey);
+    if (!normalized) return null;
+    return new Date(`${normalized}T00:00:00`);
 }
 
 function formatDateKey(dateObj) {
@@ -91,29 +112,35 @@ function formatDateKey(dateObj) {
 }
 
 function normalizeDateRange(startKey, endKey) {
-    if (!startKey) return { startKey: "", endKey: "" };
-    const startDate = parseDateKey(startKey);
-    const endDate = parseDateKey(endKey || startKey);
+    const normalizedStart = normalizeDateKey(startKey);
+    if (!normalizedStart) return { startKey: "", endKey: "" };
+    const normalizedEnd = normalizeDateKey(endKey || normalizedStart);
+    const startDate = parseDateKey(normalizedStart);
+    const endDate = parseDateKey(normalizedEnd || normalizedStart);
     if (!startDate) return { startKey: "", endKey: "" };
     if (!endDate || endDate < startDate) {
-        return { startKey, endKey: startKey };
+        return { startKey: normalizedStart, endKey: normalizedStart };
     }
-    return { startKey, endKey: formatDateKey(endDate) };
+    return { startKey: normalizedStart, endKey: formatDateKey(endDate) };
 }
 
 function getItemRange(item) {
-    const startKey = item.startDate || item.date || "";
-    const endKey = item.endDate || item.date || startKey;
+    const { startKey, endKey } = normalizeDateRange(
+        item.startDate || item.date || "",
+        item.endDate || item.date || item.startDate || ""
+    );
     const repeatDays = Array.isArray(item.repeatDays) ? item.repeatDays : [];
     return { startKey, endKey, repeatDays };
 }
 
 function itemMatchesDate(item, dateKey) {
+    const targetKey = normalizeDateKey(dateKey);
+    if (!targetKey) return false;
     const { startKey, endKey, repeatDays } = getItemRange(item);
     if (!startKey) return false;
-    if (dateKey < startKey || dateKey > endKey) return false;
+    if (targetKey < startKey || targetKey > endKey) return false;
     if (repeatDays.length === 0) return true;
-    const dateObj = parseDateKey(dateKey);
+    const dateObj = parseDateKey(targetKey);
     if (!dateObj) return false;
     return repeatDays.includes(dateObj.getDay());
 }

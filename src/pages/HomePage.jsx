@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
     HomeCard,
     Header,
@@ -57,6 +57,7 @@ function HomePage({
     friendHandleMap,
 }) {
     const [page, setPage] = useState(1);
+    const listCardRef = useRef(null);
     const pageSize = 6;
 
     const getDdayLabel = (dateKey) => {
@@ -71,6 +72,16 @@ function HomePage({
 
     useEffect(() => {
         setPage(1);
+        if (
+            selectedDate &&
+            typeof window !== "undefined" &&
+            window.matchMedia("(max-width: 995px)").matches
+        ) {
+            listCardRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
     }, [selectedDate, sortedVisible.length]);
 
 
@@ -82,7 +93,7 @@ function HomePage({
 
     return (
         <HomeGrid>
-            <HomeCard>
+            <HomeCard ref={listCardRef}>
                 <Header>
                     <h1 style={{ margin: 0, fontSize: 22 }}>Todo-List</h1>
                     <button
@@ -125,7 +136,6 @@ function HomePage({
                     onStartDateChange={(e) => {
                         const next = e.target.value;
                         setTodoStartDate(next);
-                        setSelectedDate(next);
                         if (todoEndDate && next && todoEndDate < next) {
                             setTodoEndDate(next);
                         }
@@ -149,6 +159,13 @@ function HomePage({
                         </ClearBtn>
                     )}
                 </SelectedInfo>
+                {selectedDate && sortedVisible.length === 0 && (
+                    <div style={{ marginBottom: 10 }}>
+                        <ClearBtn type="button" onClick={setSelectedDateClear}>
+                            날짜 필터 해제
+                        </ClearBtn>
+                    </div>
+                )}
                 {todoMessage && (
                     <Message $tone={todoMessage.tone}>
                         {todoMessage.text}
@@ -156,6 +173,19 @@ function HomePage({
                 )}
 
                 <List>
+                    {pageItems.length === 0 && (
+                        <li
+                            style={{
+                                padding: "12px 14px",
+                                borderRadius: 12,
+                                border: "1px solid #e5e7eb",
+                                fontSize: 13,
+                                color: "#6b7280",
+                            }}
+                        >
+                            선택한 날짜에 일정이 없습니다.
+                        </li>
+                    )}
                     {pageItems.map(({ item }) => {
                         const isEditing = editingId === item.id;
                         const isOwner =

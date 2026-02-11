@@ -7,7 +7,7 @@ export const AppWrap = styled.div`
     padding: 50px 20px;
     display: flex;
     justify-content: center;
-    overflow-x: hidden;
+    overflow-x: auto;
 
     @media (max-width: 473px) {
         min-width: 473px;
@@ -472,6 +472,7 @@ export const AuthLinks = styled.div`
     display: flex;
     gap: 14px;
     align-items: center;
+    flex-wrap: wrap;
     font-size: 12px;
     color: ${(props) => props.theme.muted};
     margin-top: 8px;
@@ -589,29 +590,45 @@ export const FullscreenWrap = styled.div`
     justify-content: center;
     padding: 32px 20px;
     background: ${(props) => props.theme.bg};
+
+    @media (max-width: 600px) {
+        align-items: flex-start;
+        padding: 20px 12px;
+    }
 `;
 
 export const AuthShell = styled.div`
     position: relative;
     width: min(420px, 100%);
+
+    @media (max-width: 600px) {
+        width: 100%;
+        max-width: 420px;
+    }
 `;
 
 export const AuthCard = styled(Card)`
     width: min(420px, 100%);
     padding: 26px;
     position: relative;
+
+    @media (max-width: 600px) {
+        width: 100%;
+        padding: 18px;
+    }
 `;
 
 export const TopBar = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 12px;
     grid-column: 1 / -1;
     padding-bottom: 50px;
 
     @media (max-width: 600px) {
-        padding-bottom: 50px;
+        padding-bottom: 16px;
     }
 `;
 
@@ -619,6 +636,7 @@ export const NavBar = styled.nav`
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    min-width: 0;
 `;
 
 export const NavLink = styled(Link)`
@@ -635,6 +653,7 @@ export const UserMeta = styled.div`
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
+    min-width: 0;
 `;
 
 export const WideCard = styled(Card)`

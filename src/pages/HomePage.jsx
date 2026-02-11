@@ -159,13 +159,6 @@ function HomePage({
                         </ClearBtn>
                     )}
                 </SelectedInfo>
-                {selectedDate && sortedVisible.length === 0 && (
-                    <div style={{ marginBottom: 10 }}>
-                        <ClearBtn type="button" onClick={setSelectedDateClear}>
-                            날짜 필터 해제
-                        </ClearBtn>
-                    </div>
-                )}
                 {todoMessage && (
                     <Message $tone={todoMessage.tone}>
                         {todoMessage.text}

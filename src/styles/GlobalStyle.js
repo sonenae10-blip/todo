@@ -10,8 +10,8 @@ const GlobalStyle = createGlobalStyle`
         background: ${(props) => props.theme.bg};
         color: ${(props) => props.theme.text};
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        min-width: 320px;
-        overflow-x: hidden;
+        min-width: 446px;
+        overflow-x: auto;
     }
 `;
 

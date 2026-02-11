@@ -4,11 +4,15 @@ import { Link } from "react-router-dom";
 export const AppWrap = styled.div`
     min-height: 100vh;
     width: 100%;
-    min-width: 446px;
     padding: 50px 20px;
     display: flex;
     justify-content: center;
-    overflow-x: auto;
+    overflow-x: hidden;
+
+    @media (max-width: 473px) {
+        min-width: 473px;
+        overflow-x: auto;
+    }
 `;
 
 export const Layout = styled.div`
@@ -65,6 +69,10 @@ export const Form = styled.form`
     gap: 10px;
     margin-bottom: 16px;
     flex-wrap: wrap;
+
+    @media (max-width: 420px) {
+        flex-direction: column;
+    }
 `;
 
 export const Input = styled.input`
@@ -78,6 +86,10 @@ export const Input = styled.input`
 
 export const DateInput = styled(Input)`
     flex: 0 0 150px;
+
+    @media (max-width: 600px) {
+        flex: 1;
+    }
 `;
 
 export const AddBtn = styled.button`
@@ -220,6 +232,11 @@ export const CalendarPopup = styled.div`
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
     padding: 12px;
     z-index: 2;
+
+    @media (max-width: 600px) {
+        width: 100%;
+        transform: translate(0, -4px);
+    }
 `;
 
 export const PopupHeader = styled.div`
@@ -389,6 +406,11 @@ export const TodoInputRow = styled.div`
     flex-wrap: nowrap;
     align-items: center;
     width: 100%;
+
+    @media (max-width: 485px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
 `;
 
 export const TodoTextRow = styled.div`
@@ -418,6 +440,11 @@ export const DateRangeRow = styled.div`
     gap: 8px;
     flex-wrap: wrap;
 
+    @media (max-width: 450px) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
     @media (min-width: 995px) {
         & > label {
             flex: 1 1 0;
@@ -434,6 +461,11 @@ export const RepeatDaysRow = styled.div`
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
+
+    @media (max-width: 450px) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
 `;
 
 export const AuthLinks = styled.div`
@@ -577,6 +609,10 @@ export const TopBar = styled.div`
     gap: 12px;
     grid-column: 1 / -1;
     padding-bottom: 50px;
+
+    @media (max-width: 600px) {
+        padding-bottom: 50px;
+    }
 `;
 
 export const NavBar = styled.nav`
